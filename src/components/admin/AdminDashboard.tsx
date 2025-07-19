@@ -17,6 +17,22 @@ import { fetchUsers } from '@/services/admin-service';
 import { showNotification } from '@/services/notification-service';
 import { supabase } from '@/integrations/supabase/client';
 
+// Define types for better TypeScript support
+interface UserWithAuthData {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  joinDate: string;
+}
+
+interface ActivityLog {
+  id: string;
+  action: string;
+  user: string;
+  time: string;
+}
+
 export const AdminDashboard = () => {
   const [stats, setStats] = useState([
     { 
@@ -49,8 +65,8 @@ export const AdminDashboard = () => {
     },
   ]);
   
-  const [recentUsers, setRecentUsers] = useState([]);
-  const [recentActivity, setRecentActivity] = useState([]);
+  const [recentUsers, setRecentUsers] = useState<UserWithAuthData[]>([]);
+  const [recentActivity, setRecentActivity] = useState<ActivityLog[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -100,28 +116,27 @@ export const AdminDashboard = () => {
       const profiles = await fetchUsers();
       
       // Get auth users to get email data
-      const { data: authUsers } = await supabase.auth.admin.listUsers();
+      const { data: authData } = await supabase.auth.admin.listUsers();
+      const authUsers = authData?.users || [];
       
-      // Merge profile and auth data
-      const usersWithAuthData = profiles
+      // Merge profile and auth data with proper type checking
+      const usersWithAuthData: UserWithAuthData[] = profiles
         .map(profile => {
-          const authUser = authUsers?.users.find(user => user.id === profile.id);
+          const authUser = authUsers.find(user => user.id === profile.id);
+          const email = authUser?.email || 'No email';
+          const role = authUser?.user_metadata?.role || 'user';
+          const joinDate = new Date(profile.created_at).toISOString().split('T')[0];
+          
           return {
-            ...profile,
-            email: authUser?.email || 'No email',
-            role: authUser?.user_metadata?.role || 'user',
-            joinDate: new Date(profile.created_at).toISOString().split('T')[0]
+            id: profile.id,
+            name: profile.username || email.split('@')[0],
+            email: email,
+            role: role,
+            joinDate: joinDate
           };
         })
-        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-        .slice(0, 3)
-        .map(user => ({
-          id: user.id,
-          name: user.username || user.email.split('@')[0],
-          email: user.email,
-          role: user.role,
-          joinDate: user.joinDate
-        }));
+        .sort((a, b) => new Date(b.joinDate).getTime() - new Date(a.joinDate).getTime())
+        .slice(0, 3);
       
       setRecentUsers(usersWithAuthData);
       
@@ -129,7 +144,7 @@ export const AdminDashboard = () => {
       const activityLogs = await getRecentActivity(5);
       
       // Format activity logs for display
-      const formattedLogs = activityLogs.map(log => ({
+      const formattedLogs: ActivityLog[] = activityLogs.map(log => ({
         id: log.id,
         action: log.action || 'System Action',
         user: 'system', // Since we don't have user_email in activity_logs
@@ -146,7 +161,7 @@ export const AdminDashboard = () => {
   };
 
   // Helper function to format time ago
-  const formatTimeAgo = (date) => {
+  const formatTimeAgo = (date: Date) => {
     const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
     
     let interval = seconds / 31536000;
