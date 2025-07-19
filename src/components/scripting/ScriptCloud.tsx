@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchScripts, type Script } from '@/services/scriptblox-api';
+import { fetchScripts, type Script } from '@/services/supabase-scripts';
 import ScriptCloudCard from './ScriptCloudCard';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';

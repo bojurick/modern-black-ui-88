@@ -6,7 +6,7 @@ import Button from '../common/Button';
 import ScriptCard from './ScriptCard';
 import Particles from '../ui/particles';
 import GridBackground from '../ui/grid-background';
-import { fetchScripts, searchScripts, type Script, type ScriptsResponse, type FetchScriptsParams } from '@/services/scriptblox-api';
+import { fetchScripts, searchScripts, type Script, type ScriptsResponse, type FetchScriptsParams } from '@/services/supabase-scripts';
 import ScriptDetailsModal from './ScriptDetailsModal';
 import { useToast } from "@/hooks/use-toast";
 import { Pagination } from '../ui/pagination';
@@ -14,15 +14,11 @@ import { Pagination } from '../ui/pagination';
 const categories = [
   'All Categories',
   'Universal',
-  'Adventure',
-  'Fighting',
-  'FPS',
-  'Horror',
-  'Obby',
-  'Roleplay',
-  'Sports',
-  'Simulator',
-  'Tycoon',
+  'Adventure Games',
+  'FPS Games',
+  'Simulator Games',
+  'Clicker Games',
+  'All Games',
 ];
 
 const ScriptLibrary = () => {
