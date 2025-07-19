@@ -1,7 +1,6 @@
 
 import React, { useRef } from 'react';
 import Editor, { OnMount, EditorProps } from '@monaco-editor/react';
-import { editor } from 'monaco-editor';
 import { useTheme } from '@/contexts/ThemeContext';
 
 interface MonacoEditorWrapperProps {
@@ -76,20 +75,20 @@ const MonacoEditorWrapper: React.FC<MonacoEditorWrapperProps> = ({
     monaco.editor.setTheme(isLight ? 'essenceLight' : 'essenceDark');
   };
 
-  const defaultOptions: editor.IStandaloneEditorConstructionOptions = {
+  const defaultOptions = {
     fontSize: 14,
     fontFamily: 'JetBrains Mono, monospace',
     fontLigatures: true,
     minimap: { enabled: false },
     scrollBeyondLastLine: false,
-    lineNumbers: 'on',
-    renderLineHighlight: 'all',
+    lineNumbers: 'on' as const,
+    renderLineHighlight: 'all' as const,
     padding: { top: 16, bottom: 16 },
     automaticLayout: true,
     tabSize: 2,
     scrollbar: {
-      vertical: 'auto',
-      horizontal: 'auto',
+      vertical: 'auto' as const,
+      horizontal: 'auto' as const,
       verticalScrollbarSize: 10,
       horizontalScrollbarSize: 10,
       verticalHasArrows: false,
