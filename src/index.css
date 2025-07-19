@@ -1,0 +1,282 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 84% 60%; /* Red primary color */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --radius: 0.75rem;
+  }
+
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
+    --primary: 0 84% 60%; /* Red primary color */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 94%;
+    --secondary-foreground: 0 0% 12%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 0 0% 92%;
+    --accent-foreground: 0 0% 12%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
+    --ring: 0 84% 60%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+/* Utility classes */
+@layer utilities {
+  .glass-morphism {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.3)];
+  }
+
+  .card-glow:hover {
+    @apply relative;
+  }
+
+  .card-glow:hover::before {
+    content: '';
+    @apply absolute -inset-0.5 bg-gradient-to-r from-primary/30 to-red-500/30 rounded-xl blur opacity-50 -z-10 transition-all duration-300;
+  }
+  
+  /* Light mode specific utility classes */
+  .light .glass-morphism {
+    @apply bg-white/90 border-gray-200 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.1)];
+  }
+  
+  .light .card {
+    @apply border-gray-200 shadow-sm bg-white;
+  }
+  
+  .light .btn-outline {
+    @apply border-gray-300 text-gray-700 hover:bg-gray-100;
+  }
+
+  /* Home page specific light mode adjustments */
+  .light .unc-badge {
+    @apply bg-red-100 text-red-800 border-red-200;
+  }
+  
+  /* Tag styling for light mode */
+  .light .tag, .light .badge {
+    @apply bg-red-100 text-red-800 border border-red-200;
+  }
+
+  .light .tag-success, .light .badge-success {
+    @apply bg-green-100 text-green-800 border border-green-200;
+  }
+
+  .light .tag-warning, .light .badge-warning {
+    @apply bg-amber-100 text-amber-800 border border-amber-200;
+  }
+
+  .light .tag-error, .light .badge-error {
+    @apply bg-red-100 text-red-800 border border-red-200;
+  }
+
+  .light .tag-free {
+    @apply bg-green-100 text-green-800 border border-green-200 font-medium;
+  }
+
+  .light .tag-paid {
+    @apply bg-amber-100 text-amber-800 border border-amber-200 font-medium;
+  }
+  
+  /* Media card light mode adjustments */
+  .light .media-card {
+    @apply bg-white shadow-md border-gray-200;
+  }
+  
+  /* Script library light mode adjustments */
+  .light .script-card {
+    @apply bg-white border-gray-200 shadow-sm;
+  }
+  
+  /* Dashboard light mode adjustments */
+  .light .dashboard-card {
+    @apply bg-white border-gray-200;
+  }
+  
+  /* Editor light mode adjustments */
+  .light .editor-wrapper {
+    @apply bg-white border-gray-200;
+  }
+  
+  /* Background elements light mode adjustments */
+  .light .bg-card\/30 {
+    @apply bg-white;
+  }
+  
+  .light .bg-black\/80 {
+    @apply bg-gray-100;
+  }
+  
+  .light .bg-black\/40 {
+    @apply bg-gray-50;
+  }
+  
+  .light .bg-black\/20 {
+    @apply bg-gray-50;
+  }
+  
+  .light .bg-white\/10 {
+    @apply bg-white shadow-sm border-gray-200;
+  }
+  
+  .light .bg-white\/5 {
+    @apply bg-white shadow-sm border-gray-200;
+  }
+  
+  /* Notification styling improvements for light mode */
+  .light .toast-notification {
+    @apply bg-white border-gray-200 shadow-md text-gray-800;
+  }
+  
+  .light .toast-success {
+    @apply border-l-4 border-l-green-500;
+  }
+  
+  .light .toast-error {
+    @apply border-l-4 border-l-red-500;
+  }
+  
+  .light .toast-warning {
+    @apply border-l-4 border-l-amber-500;
+  }
+  
+  .light .toast-info {
+    @apply border-l-4 border-l-blue-500;
+  }
+  
+  /* Text adjustments for light mode */
+  .light .text-gray-400 {
+    @apply text-gray-600;
+  }
+  
+  .light .text-gray-500 {
+    @apply text-gray-700;
+  }
+  
+  .light .text-white\/70 {
+    @apply text-gray-800;
+  }
+  
+  .light .text-white\/80 {
+    @apply text-gray-800;
+  }
+  
+  .light .text-white\/90 {
+    @apply text-gray-900;
+  }
+  
+  /* Fix for circular dependency - don't use @apply here */
+  .light .text-white {
+    color: rgb(17 24 39); /* text-gray-900 equivalent */
+  }
+  
+  /* Border adjustments for light mode */
+  .light .border-white\/10 {
+    @apply border-gray-200;
+  }
+  
+  .light .border-white\/5 {
+    @apply border-gray-200;
+  }
+  
+  /* Improved badge and tag styling for better visibility in light mode */
+  .badge, .tag {
+    @apply font-medium rounded-full px-2 py-0.5 text-xs;
+  }
+
+  /* Script card and tag adjustments for better visibility */
+  .light .script-type-tag {
+    color: white;
+    background-opacity: 0.9;
+    font-weight: 500;
+  }
+
+  .light .script-free-tag {
+    background-color: rgb(34 197 94); /* bg-green-500 */
+    color: white;
+  }
+
+  .light .script-paid-tag {
+    background-color: rgb(245 158 11); /* bg-amber-500 */
+    color: white;
+  }
+
+  .light .script-patched-tag {
+    background-color: rgb(239 68 68); /* bg-red-500 */
+    color: white;
+  }
+
+  /* Toggle light mode adjustments */
+  .light .toggle-background {
+    @apply bg-gray-200;
+  }
+
+  .light .toggle-selected {
+    @apply bg-red-100 text-red-800;
+  }
+
+  /* Notification and toast adjustments */
+  .light .notification-card,
+  .light .toast-card {
+    @apply bg-white border border-gray-200 shadow-lg text-gray-800;
+  }
+
+  .light .notification-success,
+  .light .toast-success {
+    @apply bg-green-50 border-green-200 text-green-800;
+  }
+
+  .light .notification-error,
+  .light .toast-error {
+    @apply bg-red-50 border-red-200 text-red-800;
+  }
+
+  .light .notification-warning,
+  .light .toast-warning {
+    @apply bg-amber-50 border-amber-200 text-amber-800;
+  }
+
+  .light .notification-info,
+  .light .toast-info {
+    @apply bg-blue-50 border-blue-200 text-blue-800;
+  }
+}
