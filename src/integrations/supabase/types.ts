@@ -137,6 +137,54 @@ export type Database = {
         }
         Relationships: []
       }
+      scripts: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_patched: boolean | null
+          key_link: string | null
+          key_required: boolean | null
+          script: string | null
+          script_type: string | null
+          slug: string | null
+          title: string
+          updated_at: string
+          verified: boolean | null
+          views: number | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_patched?: boolean | null
+          key_link?: string | null
+          key_required?: boolean | null
+          script?: string | null
+          script_type?: string | null
+          slug?: string | null
+          title: string
+          updated_at?: string
+          verified?: boolean | null
+          views?: number | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_patched?: boolean | null
+          key_link?: string | null
+          key_required?: boolean | null
+          script?: string | null
+          script_type?: string | null
+          slug?: string | null
+          title?: string
+          updated_at?: string
+          verified?: boolean | null
+          views?: number | null
+        }
+        Relationships: []
+      }
       service_statuses: {
         Row: {
           id: number

@@ -137,7 +137,7 @@ const ScriptCloud = () => {
           <Search className="h-16 w-16 text-gray-500 mb-4" />
           <h3 className="text-xl font-medium text-gray-400 mb-2">Search for Scripts</h3>
           <p className="text-gray-500 max-w-md">
-            Enter a script name or game to find scripts from our cloud library
+            Enter a script name to find scripts from our cloud library
           </p>
         </div>
       )}

@@ -14,11 +14,8 @@ import { Pagination } from '../ui/pagination';
 const categories = [
   'All Categories',
   'Universal',
-  'Adventure Games',
-  'FPS Games',
-  'Simulator Games',
-  'Clicker Games',
-  'All Games',
+  'Basic Scripts',
+  'Advanced Scripts',
 ];
 
 const ScriptLibrary = () => {
@@ -65,8 +62,7 @@ const ScriptLibrary = () => {
     try {
       setLoading(true);
       setError(null);
-      const mode = selectedCategory !== 'All Categories' ? selectedCategory : '';
-      const data = await searchScripts(searchTerm, mode, currentPage);
+      const data = await searchScripts(searchTerm, '', currentPage);
       setScripts(data);
       setTotalScripts(data.length);
     } catch (err: any) {

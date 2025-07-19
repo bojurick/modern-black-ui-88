@@ -5,10 +5,6 @@ export type Script = {
   id: string;
   title: string;
   script?: string;
-  game?: {
-    imageUrl?: string;
-    name?: string;
-  };
   verified?: boolean;
   isPatched?: boolean;
   scriptType: 'free' | 'paid';
@@ -44,7 +40,7 @@ export const fetchScripts = async (params: FetchScriptsParams = {}): Promise<Scr
 
     // Add search filter if query provided
     if (q.trim()) {
-      query = query.or(`title.ilike.%${q}%,description.ilike.%${q}%,game_name.ilike.%${q}%`);
+      query = query.or(`title.ilike.%${q}%,description.ilike.%${q}%`);
     }
 
     // Add script type filter
@@ -68,13 +64,6 @@ export const fetchScripts = async (params: FetchScriptsParams = {}): Promise<Scr
       id: script.id,
       title: script.title,
       script: script.script,
-      game: script.game_name ? {
-        imageUrl: script.game_image_url || "https://files.catbox.moe/gamwb1.jpg",
-        name: script.game_name
-      } : {
-        imageUrl: "https://files.catbox.moe/gamwb1.jpg",
-        name: "Universal"
-      },
       verified: script.verified || false,
       isPatched: script.is_patched || false,
       scriptType: script.script_type as 'free' | 'paid',
@@ -108,12 +97,7 @@ export const searchScripts = async (query: string, mode?: string, page = 1): Pro
 
     // Add search filter
     if (query.trim()) {
-      supabaseQuery = supabaseQuery.or(`title.ilike.%${query}%,description.ilike.%${query}%,game_name.ilike.%${query}%`);
-    }
-
-    // Add mode filter (game type)
-    if (mode && mode !== 'All Categories') {
-      supabaseQuery = supabaseQuery.eq('game_name', mode);
+      supabaseQuery = supabaseQuery.or(`title.ilike.%${query}%,description.ilike.%${query}%`);
     }
 
     // Add pagination and ordering
@@ -136,13 +120,6 @@ export const searchScripts = async (query: string, mode?: string, page = 1): Pro
       id: script.id,
       title: script.title,
       script: script.script,
-      game: script.game_name ? {
-        imageUrl: script.game_image_url || "https://files.catbox.moe/gamwb1.jpg",
-        name: script.game_name
-      } : {
-        imageUrl: "https://files.catbox.moe/gamwb1.jpg",
-        name: "Universal"
-      },
       verified: script.verified || false,
       isPatched: script.is_patched || false,
       scriptType: script.script_type as 'free' | 'paid',
