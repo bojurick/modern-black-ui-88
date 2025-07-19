@@ -138,5 +138,3 @@ export const searchScripts = async (query: string, mode?: string, page = 1): Pro
     throw error;
   }
 };
-
-export type { Script, ScriptsResponse, FetchScriptsParams };
