@@ -1,5 +1,5 @@
 
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 
 export type SystemStatusType = 'operational' | 'degraded' | 'maintenance' | 'outage';
 

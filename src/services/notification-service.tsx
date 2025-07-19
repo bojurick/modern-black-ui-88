@@ -1,4 +1,5 @@
-import { supabase } from '@/lib/supabase';
+
+import { supabase } from '@/integrations/supabase/client';
 import { CustomNotification } from '@/components/ui/custom-notification';
 import { toast } from 'sonner';
 import { ReactNode } from 'react';

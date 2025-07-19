@@ -14,7 +14,201 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      activity_logs: {
+        Row: {
+          action: string
+          created_at: string | null
+          details: Json | null
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string | null
+          details?: Json | null
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          details?: Json | null
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      license_keys: {
+        Row: {
+          created_at: string | null
+          duration: string
+          generated_by: string | null
+          id: string
+          key: string
+          status: string | null
+          used_at: string | null
+          used_by: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          duration: string
+          generated_by?: string | null
+          id?: string
+          key: string
+          status?: string | null
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          duration?: string
+          generated_by?: string | null
+          id?: string
+          key?: string
+          status?: string | null
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_global: boolean | null
+          is_read: boolean | null
+          message: string
+          sent_by: string | null
+          title: string
+          type: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_global?: boolean | null
+          is_read?: boolean | null
+          message: string
+          sent_by?: string | null
+          title: string
+          type?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_global?: boolean | null
+          is_read?: boolean | null
+          message?: string
+          sent_by?: string | null
+          title?: string
+          type?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          favorite_scripts: string[] | null
+          id: string
+          theme: string | null
+          updated_at: string | null
+          username: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          favorite_scripts?: string[] | null
+          id: string
+          theme?: string | null
+          updated_at?: string | null
+          username?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          favorite_scripts?: string[] | null
+          id?: string
+          theme?: string | null
+          updated_at?: string | null
+          username?: string | null
+        }
+        Relationships: []
+      }
+      service_statuses: {
+        Row: {
+          id: number
+          message: string | null
+          name: string
+          status: string
+          updated_at: string | null
+        }
+        Insert: {
+          id?: number
+          message?: string | null
+          name: string
+          status?: string
+          updated_at?: string | null
+        }
+        Update: {
+          id?: number
+          message?: string | null
+          name?: string
+          status?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      status_history: {
+        Row: {
+          changed_by: string | null
+          created_at: string | null
+          id: string
+          message: string | null
+          status: string
+        }
+        Insert: {
+          changed_by?: string | null
+          created_at?: string | null
+          id?: string
+          message?: string | null
+          status: string
+        }
+        Update: {
+          changed_by?: string | null
+          created_at?: string | null
+          id?: string
+          message?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
+      system_status: {
+        Row: {
+          id: number
+          message: string | null
+          status: string
+          updated_at: string | null
+          updated_by: string | null
+        }
+        Insert: {
+          id?: number
+          message?: string | null
+          status?: string
+          updated_at?: string | null
+          updated_by?: string | null
+        }
+        Update: {
+          id?: number
+          message?: string | null
+          status?: string
+          updated_at?: string | null
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

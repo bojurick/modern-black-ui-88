@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,7 +15,7 @@ import { toast } from 'sonner';
 import { Separator } from '@/components/ui/separator';
 
 const Login = () => {
-  const [email, setEmail] = useState('djejhjejr@gmail.com'); // Set to the new admin email for easier testing
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);

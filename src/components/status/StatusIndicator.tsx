@@ -2,15 +2,21 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ActivityIcon, CheckCircleIcon, ServerIcon, ZapIcon } from 'lucide-react';
-import { SystemStatusType } from '@/services/status-service';
+import { SystemStatusType, getSystemStatus } from '@/services/status-service';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 
 const StatusIndicator = () => {
-  // Since the tables don't exist, we'll use a default status
-  const defaultStatus: SystemStatusType = 'operational';
+  const { data: systemStatus } = useQuery({
+    queryKey: ['system-status'],
+    queryFn: getSystemStatus,
+    refetchInterval: 30000, // Refetch every 30 seconds
+    retry: false,
+  });
 
-  const getStatusIcon = (statusType: SystemStatusType = defaultStatus) => {
+  const status = systemStatus?.status || 'operational';
+
+  const getStatusIcon = (statusType: SystemStatusType) => {
     switch (statusType) {
       case 'operational':
         return <CheckCircleIcon className="h-4 w-4 text-green-500" />;
@@ -35,7 +41,7 @@ const StatusIndicator = () => {
         className="px-4 py-2 rounded-md text-sm font-medium transition-colors text-gray-400 hover:text-white hover:bg-purple-500/20 flex items-center gap-1.5 group"
       >
         <div className="p-1 rounded-full bg-purple-500/10 group-hover:bg-purple-500/20 transition-colors">
-          {getStatusIcon(defaultStatus)}
+          {getStatusIcon(status)}
         </div>
         <span>Status</span>
       </Link>

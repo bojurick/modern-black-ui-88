@@ -1,6 +1,7 @@
+
 import { createContext, useContext, useEffect, useState } from 'react';
 import { Session, User } from '@supabase/supabase-js';
-import { supabase, ADMIN_CREDENTIALS, isUserAdmin } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { CustomNotification } from '@/components/ui/custom-notification';
 
@@ -25,6 +26,27 @@ type AuthContextType = {
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+// Admin emails - update these with your actual admin emails
+const ADMIN_EMAILS = [
+  'admin@yourdomain.com', // Replace with your actual admin email
+];
+
+// Check if user is an admin
+const isUserAdmin = (user: any) => {
+  if (!user) return false;
+  
+  // Check user email against list of admin emails
+  if (ADMIN_EMAILS.includes(user.email)) {
+    return true;
+  }
+  
+  // Check user roles from metadata
+  return user.user_metadata?.role === 'admin' || 
+         user.user_metadata?.role === 'head admin' || 
+         user.user_metadata?.role === 'owner' || 
+         user.user_metadata?.role === 'developer';
+};
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -97,6 +119,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             username,
             theme: 'dark',
           },
+          emailRedirectTo: `${window.location.origin}/`,
         },
       });
       
