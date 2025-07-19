@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { showNotification } from '@/services/notification-service';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
-import { isUserAdmin } from '@/lib/supabase';
 import Particles from '@/components/ui/particles';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import {
@@ -24,6 +23,27 @@ import { UserManagement } from '@/components/admin/UserManagement';
 import { KeyGenerator } from '@/components/admin/KeyGenerator';
 import { AdminDashboard } from '@/components/admin/AdminDashboard';
 import { StatusPage } from '@/components/admin/StatusPage';
+
+// Check if user is admin - moved from deleted lib/supabase.ts
+const isUserAdmin = (user: any) => {
+  if (!user) return false;
+  
+  // Admin emails - update these with your actual admin emails
+  const ADMIN_EMAILS = [
+    'admin@yourdomain.com', // Replace with your actual admin email
+  ];
+  
+  // Check user email against list of admin emails
+  if (ADMIN_EMAILS.includes(user.email)) {
+    return true;
+  }
+  
+  // Check user roles from metadata
+  return user.user_metadata?.role === 'admin' || 
+         user.user_metadata?.role === 'head admin' || 
+         user.user_metadata?.role === 'owner' || 
+         user.user_metadata?.role === 'developer';
+};
 
 const AdminPanel = () => {
   const { user } = useAuth();

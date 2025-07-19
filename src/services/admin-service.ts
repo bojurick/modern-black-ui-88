@@ -1,4 +1,3 @@
-
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -35,11 +34,10 @@ export const updateUserRole = async (userId: string, role: string) => {
 
 export const updateUserStatus = async (userId: string, status: 'active' | 'inactive' | 'suspended') => {
   try {
-    // For user status, we might need to implement this in profiles or handle via auth
-    const { data, error } = await supabase
-      .from('profiles')
-      .update({ status })
-      .eq('id', userId);
+    // For user status, we'll store it in user metadata since profiles table doesn't have status
+    const { data, error } = await supabase.auth.admin.updateUserById(userId, {
+      user_metadata: { status }
+    });
       
     if (error) throw error;
     return data;

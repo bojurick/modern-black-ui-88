@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ADMIN_CREDENTIALS } from '@/lib/supabase';
 import { 
   Table,
   TableBody,
@@ -21,6 +19,11 @@ import { fetchUsers, updateUserRole, updateUserStatus } from '@/services/admin-s
 import { showNotification } from '@/services/notification-service';
 import { sendUserNotification } from '@/services/admin-service';
 import { useAuth } from '@/contexts/AuthContext';
+
+// Admin credentials and roles
+const ADMIN_CREDENTIALS = {
+  roles: ['admin', 'head admin', 'owner', 'developer', 'trial mod', 'trail support']
+};
 
 export const UserManagement = () => {
   const [users, setUsers] = useState<any[]>([]);

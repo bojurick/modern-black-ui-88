@@ -15,6 +15,7 @@ import {
 import { getAdminStats, getRecentActivity } from '@/services/admin-service';
 import { fetchUsers } from '@/services/admin-service';
 import { showNotification } from '@/services/notification-service';
+import { supabase } from '@/integrations/supabase/client';
 
 export const AdminDashboard = () => {
   const [stats, setStats] = useState([
@@ -95,25 +96,34 @@ export const AdminDashboard = () => {
         },
       ]);
       
-      // Fetch recent users
-      const users = await fetchUsers();
-      // Get only the 3 most recent users
-      const recentUsersData = users
-        .sort((a, b) => {
-          const dateA = new Date(a.joinDate || a.created_at).getTime();
-          const dateB = new Date(b.joinDate || b.created_at).getTime();
-          return dateB - dateA;
+      // Fetch recent users with auth data
+      const profiles = await fetchUsers();
+      
+      // Get auth users to get email data
+      const { data: authUsers } = await supabase.auth.admin.listUsers();
+      
+      // Merge profile and auth data
+      const usersWithAuthData = profiles
+        .map(profile => {
+          const authUser = authUsers?.users.find(user => user.id === profile.id);
+          return {
+            ...profile,
+            email: authUser?.email || 'No email',
+            role: authUser?.user_metadata?.role || 'user',
+            joinDate: new Date(profile.created_at).toISOString().split('T')[0]
+          };
         })
+        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
         .slice(0, 3)
         .map(user => ({
           id: user.id,
           name: user.username || user.email.split('@')[0],
           email: user.email,
-          role: user.role || 'user',
-          joinDate: user.joinDate || new Date(user.created_at).toISOString().split('T')[0]
+          role: user.role,
+          joinDate: user.joinDate
         }));
       
-      setRecentUsers(recentUsersData);
+      setRecentUsers(usersWithAuthData);
       
       // Fetch recent activity
       const activityLogs = await getRecentActivity(5);
@@ -122,7 +132,7 @@ export const AdminDashboard = () => {
       const formattedLogs = activityLogs.map(log => ({
         id: log.id,
         action: log.action || 'System Action',
-        user: log.user_email || 'system',
+        user: 'system', // Since we don't have user_email in activity_logs
         time: formatTimeAgo(new Date(log.created_at))
       }));
       
