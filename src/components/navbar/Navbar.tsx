@@ -16,7 +16,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Script Library', path: '/library' },
+    { name: 'Workflow Library', path: '/library' },
     { name: 'Execute', path: '/execute' },
     { name: 'Status', path: '/status' },
   ];
